@@ -6,7 +6,7 @@
         <label>
           <input v-model="searchVal" placeholder="请输入您好搜索的内容"/>
         </label>
-        <button @click="doSearch">搜索</button>
+        <button @click="search">搜索</button>
         <button @click="goHome">Home</button>
 
         <div>
@@ -32,23 +32,21 @@
       </div>
       <br/>
     </header>
-    <div id="contents">
-      <slot name="content"></slot>
-    </div>
   </div>
 </template>
 <script>
   import sci from '../pages/shoppingcard/sci.vue'
 
+  const headDate = {
+    searchVal: '',
+    isLogin: false,
+    userName: '游客'
+  }
   export default {
     components: {sci},
     name: 'base_header',
     data () {
-      return {
-        searchVal: '',
-        isLogin: false,
-        userName: '游客'
-      }
+      return headDate
     },
     methods: {
       goLogin: function () {
@@ -57,8 +55,8 @@
       goHome: function () {
         this.$router.push('/')
       },
-      doSearch: function () {
-        this.$router.push('/product/detail')
+      search: function () {
+        this.$router.push({path: '/product/list', query: {searchContent: this.searchVal}})
       }
     }
   }

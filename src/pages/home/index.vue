@@ -1,10 +1,9 @@
 <template>
   <div>
-    <baseHeader>
-      <div slot="content">
-        <h2>{{ welcome }}！</h2>
-      </div>
-    </baseHeader>
+    <baseHeader></baseHeader>
+    <div>
+      <h2>{{ welcome }}！</h2>
+    </div>
     <button @click="getMsg">点我看美女</button>
     <div v-show="show">
       <img :src="img" />
