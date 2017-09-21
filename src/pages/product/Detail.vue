@@ -24,7 +24,8 @@
   </div>
 </template>
 <script>
-  import { mapGetters } from 'vuex'
+  import _content from '../../../static/content'
+  import _fetch from '../../../static/fetch.helper'
   import baseHeader from '../../components/header.vue'
   import recommendationSet from '../recommendation/list.vue'
   import reviewSet from '../review/list.vue'
@@ -40,8 +41,8 @@
     },
     methods: {
       getProduct: function (pId) {
-        const uri = this.basicPath + 'shelf/products/' + pId
-        fetch(uri, this.fetchOptions)
+        const uri = _content.API_PATH.URI + 'shelf/products/' + pId
+        fetch(uri, _fetch.options.get('get'))
           .then(response => {
             const status = response.status
             if (status === 200) {
@@ -63,12 +64,6 @@
             }
           })
       }
-    },
-    computed: {
-      ...mapGetters({
-        fetchOptions: 'fetchOptions',
-        basicPath: 'basicPath'
-      })
     },
     mounted: function () {
       this.getProduct(this.$router.currentRoute.query.pId)

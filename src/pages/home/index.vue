@@ -4,7 +4,7 @@
     <div>
       <h2>{{ welcome }}！</h2>
     </div>
-    <button @click="getMsg">点我看美女</button>
+    <button @click="getMsg">点我</button>
     <div v-show="show">
       <img :src="img" />
     </div>

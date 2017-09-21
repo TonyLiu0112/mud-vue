@@ -25,7 +25,8 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
+  import _content from '../../../static/content'
+  import _fetch from '../../../static/fetch.helper'
   import baseHeader from '../../components/header.vue'
 
   export default {
@@ -44,8 +45,8 @@
           this.emptyList('请输入您要查询的产品信息')
           return
         }
-        const uri = (this.productListURI + 'shelf/find/products/%s').replace('%s', content)
-        fetch(uri, this.fetchOptions)
+        const uri = (_content.API_PATH.URI + 'shelf/find/products/%s').replace('%s', content)
+        fetch(uri, _fetch.options.get('get'))
           .then(response => {
             const status = response.status
             if (status === 200) {
@@ -76,12 +77,6 @@
       showDetail: function (id) {
         this.$router.push({path: '/product/detail', query: {pId: id}})
       }
-    },
-    computed: {
-      ...mapGetters({
-        fetchOptions: 'fetchOptions',
-        productListURI: 'basicPath'
-      })
     },
     mounted: function () {
       this.search(this.$router.currentRoute.query.searchContent)
