@@ -42,7 +42,7 @@
     methods: {
       getProduct: function (pId) {
         const uri = _content.API_PATH.URI + 'shelf/products/' + pId
-        fetch(uri, _fetch.options.get('get'))
+        fetch(uri, _fetch.options.get())
           .then(response => {
             const status = response.status
             if (status === 200) {

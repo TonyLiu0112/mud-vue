@@ -46,7 +46,7 @@
           return
         }
         const uri = (_content.API_PATH.URI + 'shelf/find/products/%s').replace('%s', content)
-        fetch(uri, _fetch.options.get('get'))
+        fetch(uri, _fetch.options.get())
           .then(response => {
             const status = response.status
             if (status === 200) {
@@ -61,6 +61,7 @@
             throw Error(response.statusText)
           })
           .then(json => {
+            console.log('正在处理...')
             this.products = json.data.list
             this.hasProduct = !!this.products
             if (!this.hasProduct) {
@@ -68,6 +69,7 @@
             }
           })
           .catch(errorMsg => { console.error(errorMsg) })
+        console.log('nihao')
       },
       emptyList: function (msg) {
         this.products = []

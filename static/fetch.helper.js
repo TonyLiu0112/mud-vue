@@ -1,9 +1,9 @@
 import _token from './token.helper'
 
 const options = {
-  get: function (method) {
+  get: function () {
     return {
-      method: method,
+      method: 'get',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
@@ -11,7 +11,16 @@ const options = {
       }
     }
   },
-  post: function (method, reqBody) {
+  post: function (reqBody) {
+    return this._cores('post', reqBody)
+  },
+  delete: function (reqBody) {
+    return this._cores('delete', reqBody)
+  },
+  put: function (reqBody) {
+    return this._cores('put', reqBody)
+  },
+  _cores: function (method, reqBody) {
     return {
       method: method,
       headers: {

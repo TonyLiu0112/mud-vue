@@ -4,10 +4,6 @@
     <div>
       <h2>{{ welcome }}！</h2>
     </div>
-    <button @click="getMsg">点我</button>
-    <div v-show="show">
-      <img :src="img" />
-    </div>
   </div>
 </template>
 
@@ -29,14 +25,6 @@
     methods: {
       goProduct: function () {
         this.$router.push('/product/detail')
-      },
-      getMsg: function () {
-        fetch('http://localhost:18080/mud-web/m/ra/account/captcha')
-          .then(res => res.json())
-          .then(json => {
-            homeData.show = true
-            homeData.img = 'data:image/png;base64,' + json.data.base64Str
-          })
       }
     }
   }
