@@ -27,8 +27,8 @@
   import _content from '../../../static/content'
   import _fetch from '../../../static/fetch.helper'
   import baseHeader from '../../components/header.vue'
-  import recommendationSet from '../recommendation/list.vue'
-  import reviewSet from '../review/list.vue'
+  import recommendationSet from '../recommendation/recommendationList.vue'
+  import reviewSet from '../review/reviewList.vue'
 
   export default {
     components: {baseHeader, recommendationSet, reviewSet},
@@ -47,6 +47,10 @@
             const status = response.status
             if (status === 200) {
               return response.json()
+            }
+            if (status === 401) {
+              this.$router.push('/security/login')
+              throw new Error('认证信息过期')
             }
             if (status === 404) {
               this.emptyList('未找到产品信息!')

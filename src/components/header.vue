@@ -10,15 +10,6 @@
         <button @click="goHome">Home</button>
 
         <div>
-          <!-- 快速连接 -->
-          <a href="javascript:void(0);" style="color: #7dacda">我的亚马逊</a>
-          <a href="javascript:void(0);" style="color: #7dacda">Z秒杀</a>
-          <a href="javascript:void(0);" style="color: #7dacda">礼品卡</a>
-          <a href="javascript:void(0);" style="color: #7dacda">我要开店</a>
-          <a href="javascript:void(0);" style="color: #7dacda">海外购</a>
-          <a href="javascript:void(0);" style="color: #7dacda">帮助</a>
-          <a href="javascript:void(0);" style="color: #7dacda">In English</a>
-
           <!-- 用户信息 -->
           <a v-if="isLogin">您好: {{ userName }}</a>
           <a v-else="isLogin">
@@ -27,7 +18,7 @@
           </a>
 
           <!-- 购物车信息 -->
-          <sci></sci>
+          <market></market>
         </div>
       </div>
       <br/>
@@ -35,15 +26,16 @@
   </div>
 </template>
 <script>
-  import sci from '../pages/shoppingcard/sci.vue'
+  import market from '../pages/shoppingcard/market.vue'
 
   const headDate = {
     searchVal: '',
     isLogin: false,
+    id: 0,
     userName: '游客'
   }
   export default {
-    components: {sci},
+    components: {market},
     name: 'base_header',
     data () {
       return headDate
@@ -57,7 +49,16 @@
       },
       search: function () {
         this.$router.push({path: '/product/list', query: {searchContent: this.searchVal}})
+      },
+      _initUserInfo: function () {
+        const user = JSON.parse(window.localStorage.user)
+        headDate.id = user.id
+        headDate.userName = user.nickname
+        headDate.isLogin = true
       }
+    },
+    mounted: function () {
+      this._initUserInfo()
     }
   }
 </script>

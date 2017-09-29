@@ -5,8 +5,21 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex'
+
   export default {
-    name: 'app'
+    name: 'app',
+    methods: {
+      ...mapActions({
+        _initCard: 'initCards'
+      }),
+      _initCards: function () {
+        return this._initCard()
+      }
+    },
+    created: function () {
+      this._initCards()
+    }
   }
 </script>
 

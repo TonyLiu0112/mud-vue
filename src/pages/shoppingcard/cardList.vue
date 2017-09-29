@@ -70,6 +70,9 @@
       removeToCard: function (pId) {
         this._del(pId)
       }
+    },
+    mounted: function () {
+      // todo 加载购物车信息
     }
   }
 </script>

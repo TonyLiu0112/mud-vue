@@ -23,7 +23,6 @@
     </form>
   </div>
 </template>
-
 <script>
   import _content from '../../../static/content'
 
@@ -71,11 +70,17 @@
           })
           .then(json => {
             window.localStorage.token = json.data.access_token
+            this.extractToken(window.localStorage.token)
             this.$router.push('/')
           })
           .catch(error => {
             console.error(error)
           })
+      },
+      extractToken: function (token) {
+        const payload = token.split('.')[1]
+        const tokenObj = JSON.parse(decodeURIComponent(escape(window.atob(payload))))
+        window.localStorage.user = JSON.stringify(tokenObj.user)
       },
       verify: function () {
         return this.loginReq.loginName.trim() === '' || this.loginReq.password.trim() === ''

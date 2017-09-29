@@ -21,14 +21,23 @@
     },
     computed: {
       ...mapGetters({
-        count: 'getCount'
+        allProduct: 'getAll'
       }),
-      getCount: function () {
-        return this.count
+      totalCount: function () {
+        const products = this.allProduct.cards
+        console.log(products)
+        let count = 0
+        for (const key in products) {
+          if (products.hasOwnProperty(key)) {
+            const p = products[key]
+            count += p.count
+          }
+        }
+        return count
       }
     },
     mounted: function () {
-      this.productCount = this.getCount
+      this.productCount = this.totalCount
     }
   }
 </script>
