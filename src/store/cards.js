@@ -29,18 +29,14 @@ const storeOps = {
       .then(response => {
         const status = response.status
         if (status === 204) {
-          return response.json()
-        }
-        if (status === 404) {
+          console.log('删除成功')
+        } else if (status === 404) {
           console.log('未找到删除的资源')
-        }
-        if (status === 500) {
+        } else if (status === 500) {
           console.error('内部服务错误')
+        } else {
+          throw Error(response.statusText)
         }
-        throw Error(response.statusText)
-      })
-      .then(json => {
-        _router.push('/shoppingcard/list')
       })
       .catch(error => console.error(error))
   },
@@ -74,11 +70,11 @@ const storeOps = {
 
 const actions = {
   addProduct: function (_state, product) {
-    console.log(product)
     if (state.all.hasOwnProperty(product.id)) {
       state.all[product.id].count++
+    } else {
+      state.all[product.id] = {info: product, count: 1}
     }
-    state.all[product.id] = {info: product, count: 1}
     storeOps.add(product.id, 1)
   },
   subCount: function (_state, productId) {

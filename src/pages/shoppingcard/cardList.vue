@@ -1,6 +1,7 @@
 <template>
   <div>
-    <table>
+    购物车列表
+    <table style="margin: auto;" border="1">
       <tr>
         <td>商品名称</td>
         <td>图片</td>
@@ -20,6 +21,9 @@
         </td>
       </tr>
     </table>
+    <div>
+      总价：{{ shoppingcards.totalPrice }} RMB
+    </div>
   </div>
 </template>
 
@@ -36,7 +40,7 @@
         }
       }
     },
-    computed: {
+    methods: {
       ...mapGetters({
         cards: 'getAll'
       }),
@@ -45,34 +49,40 @@
         _subToCard: 'subCount',
         _del: 'removeProduct'
       }),
+      addToCard: function (product) {
+        this._addToCard(product)
+        this.all()
+      },
+      subToCard: function (pId) {
+        this._subToCard(pId)
+        this.all()
+      },
+      removeToCard: function (pId) {
+        this._del(pId)
+        this.all()
+      },
       all: function () {
         const allProduct = []
-        for (const key in this.cards) {
-          if (this.cards.hasOwnProperty(key)) {
-            const p = this.cards[key]
-            allProduct.push(p)
+        const cacheProduct = this.cards().cards
+        console.log(cacheProduct)
+        for (const key in cacheProduct) {
+          if (cacheProduct.hasOwnProperty(key)) {
+            const p = cacheProduct[key]
+            if (p && p.count > 0) {
+              p.info.count = p.count
+              allProduct.push(p.info)
+            }
           }
         }
         const totalPrice = allProduct.reduce((price, p) => {
-          return price + p.price
+          return price + p.price * p.count
         }, 0)
         this.shoppingcards.products = allProduct
         this.shoppingcards.totalPrice = totalPrice
       }
     },
-    methods: {
-      addToCard: function (product) {
-        this._addToCard(product)
-      },
-      subToCard: function (pId) {
-        this._subToCard(pId)
-      },
-      removeToCard: function (pId) {
-        this._del(pId)
-      }
-    },
     mounted: function () {
-      // todo 加载购物车信息
+      this.all()
     }
   }
 </script>
